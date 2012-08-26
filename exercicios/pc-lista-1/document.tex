@@ -1,0 +1,84 @@
+
+\documentclass{article}
+
+\usepackage[brazil]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+%\usepackage{algorithm}                             % when including figure files
+%\usepackage{sansmathaccent}
+%\pdfmapfile{+sansmathaccent.map}
+\usepackage{epstopdf}
+\usepackage{epsfig}
+
+\author{Carlos Raoni de Alencar Mendes}
+\title{INF2591 - Programação Concorrente: Lista de Exercícios 1}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+  \item Considere o algoritmo abaixo: 
+
+\begin{verbatim}
+public void lock() { 
+  victim    = i;
+  flag[i] = true;     
+  while (flag[j] && victim == i) {}; 
+} 
+ 
+public void unlock() { 
+  flag[i] = false;   
+} 
+\end{verbatim}
+
+Seguindo a nomenclatura do livro de referência (The Art of
+Multiprocessor Programming), a seguinte sequência de instruções permite que as
+threads concorrentes A e B entrem na região crítica (CS - Critical Section) ao
+mesmo tempo:
+
+\begin{itemize}
+  \item Thread B - $write_B(victim = B)$
+  \item Thread A - $write_A(victim = A)$
+  \item Thread A - $write_A(flag[A] = true)$
+  \item Thread A - $read_A(flag[B] == false)$
+  \item Thread A - $read_A(victim == A)$
+  \item Thread A - $CS_A$
+  \item Thread B - $write_B(flag[B] = true)$
+  \item Thread B - $read_B(flag[A] == true)$
+  \item Thread B - $read_B(victim == A)$
+  \item Thread B - $CS_B$  
+\end{itemize}
+
+\item Questões sobre a leitura do artigo ``Threads Cannot be Implemented as a
+Library'':
+
+	\begin{enumerate}
+	  \item[1)] Os problemas apresentados no artigo indicam que o suporte a
+	  programação concorrente nas linguagens de programação deve ser incluído no
+	  projeto da própria linguagem e não adicionado através de uma biblioteca, 
+	  já que as possíveis otimizações de compiladores que não levam diretamente
+	  em consideração a possibilidade de concorrência (não possuem um modelo de
+	  memória previsível, que possibilite a implementação segura de programas
+	  concorrentes) pode levar a efeitos colaterais inesperados, como os apresentados no artigo.
+	  Dessa forma fica evidente a necessidade de inclusão no projeto das linguagens, 
+	  que desejem suportar a programação concorrente, o suporte a protocolos de
+	  exclusão mútua de forma nativa. Os programas concorrentes construídos fazendo 
+	  o uso de bibliotecas de concorrência (devido a ausência do suporte nativo à
+	  concorrência pela linguagem de programação utilizada) devem verificar a
+	  possiblidade de ocorrência dos problemas descritos e dar o devido tratamento
+	  aos mesmos.
+	  	  
+	  \item[2)] Não tinha ciência até o momento do possível impacto que otimizações
+	  de compiladores poderiam ter em programas concorrentes desenvolvidos com
+	  bibliotecas de concorrência. Os casos apresentados no artigo foram
+	  completamente novos para mim, a exposição aos mesmos serviu principalmente
+	  para dar a dimensão exata das preocupações que devem ser tomadas aos se
+	  desenvolver programas concorrentes.
+	  
+	\end{enumerate}
+
+\end{enumerate}
+
+\end{document}
