@@ -8,6 +8,7 @@
 #include <sstream>
 #include <vector>
 #include <string>
+#include <map>
 
 using namespace std;
 
@@ -18,47 +19,59 @@ typedef enum {FREE, USED} BufferEntryStatus;
 
 vector<string> buffer(BUFFER_SIZE);
 vector<BufferEntryStatus> buffer_status(BUFFER_SIZE, FREE);
+int total_free_entrys = BUFFER_SIZE;
 
-vector<int> next_to_read(NUM_TOTAL_THREADS, 0);
-vector<int> num_pending_reads(BUFFER_SIZE, 0);
-int next_to_write = 0;
+int last_send_message = 0;
+vector<int> last_read(NUM_TOTAL_THREADS, 0);
+map<int, int> map_msg_buffer_index;
+
+int delayed_senders = 0;
+vector<int> delayed_receive(NUM_TOTAL_THREADS, 0);
 
 sem_t e; // semaforo da exclusao mutua
-sem_t sem_senders[BUFFER_SIZE]; // semaforo para cada posicao do buffer
-sem_t sem_receivers[BUFFER_SIZE];
-
-vector<int> delayed_senders(BUFFER_SIZE, 0);
-vector<int> delayed_receivers(BUFFER_SIZE, 0);
+sem_t sem_receive[NUM_TOTAL_THREADS];
+sem_t sem_send;
 
 void send(int id){
-//<await (status[proximoaserescrito] == livre)
 
     sem_wait(&e);
-    if(buffer_status[next_to_write] == USED){
-        delayed_senders[next_to_write]++;
+    if(total_free_entrys == 0){
+        delayed_senders++;
         sem_post(&e);
-        sem_wait(&sem_senders[next_to_write]);
+        sem_wait(&sem_send);
+    }
+    total_free_entrys--;
+    // Procura uma entrada livre no buffer
+    int writing_index = -1;
+    for(int i=0; i<BUFFER_SIZE; i++){
+        if(buffer_status[i] == FREE){
+            writing_index = i;
+            break;
+        }
+    }
+    if(writing_index == -1){
+        cout << "ERRO: Nao encontrou posicao livre no buffer!" << endl;
     }
 
     //EscreveDados(proximoaserescrito, dados);
     ostringstream msg;
-    //msg << "Thread " << id << " message at position " << next_to_write;
-    msg << next_to_write;
+    msg << "[" << id << ", " << writing_index << "]";
     cout << "Thread " << id << " wrote the message: " << msg.str() << endl;
-    buffer[next_to_write] = msg.str();
-
-    //status[proximoaserescrito] = ocupado;
-    buffer_status[next_to_write] = USED;
-    //faltam[proximoaserescrito] = totalthreads;
-    num_pending_reads[next_to_write] = NUM_TOTAL_THREADS;
-    int writing_position = next_to_write;
-    //proximoaserescrito = (proximoaserescrito + 1) mod tambuffer;
-    next_to_write = (next_to_write + 1) % BUFFER_SIZE;
+    buffer[writing_index] = msg.str();
+    map_msg_buffer_index[++last_send_message] = writing_index;
+    buffer_status[writing_index] = USED;
 
     //SIGNAL
-    if(delayed_receivers[writing_position] > 0){
-        delayed_receivers[writing_position]--;
-        sem_post(&sem_receivers[writing_position]);
+    int delayed_receiver = -1;
+    for(int i=0; i<NUM_TOTAL_THREADS; i++){
+        if(delayed_receive[i] > 0){
+            delayed_receiver = i;
+            break;
+        }
+    }
+    if(delayed_receiver >= 0){
+        delayed_receive[delayed_receiver]--;
+        sem_post(&sem_receive[delayed_receiver]);
     }
     else{
         sem_post(&e);
@@ -67,44 +80,52 @@ void send(int id){
 }
 
 void receive(int id, vector<string> & received){
-    //< await (status[proximoaserlido[eu]] == ocupado)>
+
     sem_wait(&e);
-    if(buffer_status[next_to_read[id]] == FREE){
-        delayed_receivers[next_to_read[id]]++;
+    if(last_read[id] == last_send_message){
+        delayed_receive[id]++;
         sem_post(&e);
-        sem_wait(&sem_receivers[next_to_read[id]]);
+        sem_wait(&sem_receive[id]);
     }
     sem_post(&e);
 
-    //meusdados = LeDados([proximoaserlido[eu]]);
-    received.push_back(buffer[next_to_read[id]]);
-    //cout << "Thread " << id << " read the message: " << buffer[next_to_read[id]] << endl;
+    int next_to_read = last_read[id] + 1;
+    received.push_back(buffer[map_msg_buffer_index[next_to_read]]);
+    last_read[id] = next_to_read;
 
-    //<
     sem_wait(&e);
-    //faltam[proximoaserlido[eu]]--;
-    num_pending_reads[next_to_read[id]]--;
-    //if (faltam[proximoaserlido[eu]] == 0)
-        //status[proximoaserlido[eu]] = livre;
-    if(num_pending_reads[next_to_read[id]] == 0)
-        buffer_status[next_to_read[id]] = FREE;
+    bool message_has_pending_reads = false;
+    for(int i=0; i<NUM_TOTAL_THREADS; i++){
+        if(last_read[i] < next_to_read){
+            message_has_pending_reads = true;
+            break;
+        }
+    }
+    if(!message_has_pending_reads){
+        buffer_status[map_msg_buffer_index[next_to_read]] = FREE;
+        map_msg_buffer_index.erase(next_to_read);
+        total_free_entrys++;
+    }
 
     // SIGNAL
-    if(delayed_senders[next_to_read[id]] > 0 && buffer_status[next_to_read[id]] == FREE){
-        delayed_senders[next_to_read[id]]--;
-        sem_post(&sem_senders[next_to_read[id]]);
+    int delayed_receiver = -1;
+    for(int i=0; i<NUM_TOTAL_THREADS; i++){
+        if(delayed_receive[i] > 0 && last_read[i] < last_send_message){
+            delayed_receiver = i;
+            break;
+        }
     }
-    else if(delayed_receivers[next_to_read[id]] > 0 && buffer_status[next_to_read[id]] == USED){
-        delayed_receivers[next_to_read[id]]--;
-        sem_post(&sem_receivers[next_to_read[id]]);
+    if(delayed_receiver >= 0){
+        delayed_receive[delayed_receiver]--;
+        sem_post(&sem_receive[delayed_receiver]);
+    }
+    else if(delayed_senders > 0 && total_free_entrys > 0){
+        delayed_senders--;
+        sem_post(&sem_send);
     }
     else{
         sem_post(&e);
     }
-    //>
-
-    //proximoaserlido[eu] = (proximoaserlido[eu] + 1 ) mod tambuffer;
-    next_to_read[id] = (next_to_read[id] + 1) % BUFFER_SIZE;
 }
 
 void * action(void * arg){
@@ -117,7 +138,7 @@ void * action(void * arg){
     }
 
     sem_wait(&e);
-    cout << "Received Messages from thread " << threadId << ": " << endl;
+    cout << "Rec. Msgs from thread " << threadId << ": ";;
     for(int i=0; i<received.size(); i++){
         cout << received[i];
     }
@@ -130,9 +151,9 @@ int main(int argc, char ** argv){
 	pthread_t thread[NUM_TOTAL_THREADS];
 
 	sem_init(&e, 0, 1);
-	for(int i=0; i<BUFFER_SIZE; i++){
-        sem_init(&sem_senders[i], 0, 0);
-        sem_init(&sem_receivers[i], 0, 0);
+	sem_init(&sem_send, 0, 0);
+	for(int i=0; i<NUM_TOTAL_THREADS; i++){
+        sem_init(&sem_receive[i], 0, 0);
 	}
 
 	for(int i=0; i<NUM_TOTAL_THREADS; i++){
