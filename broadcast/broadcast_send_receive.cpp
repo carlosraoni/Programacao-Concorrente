@@ -36,7 +36,7 @@ receive(int threadId){
         await(last_read[threadId] < last_send_message) // Aguarda até que existam mensagens que não foram lidas
     >
 
-    int next_to_read = (last_read[id] + 1) % BUFFER_SIZE; // Determina a posição do buffer da próxima mensagem a ser lida
+    int next_to_read = (last_read[threadId] + 1) % BUFFER_SIZE; // Determina a posição do buffer da próxima mensagem a ser lida
     LeDados(buffer[next_to_read]); // Lê a mensagem do buffer
 
     <
