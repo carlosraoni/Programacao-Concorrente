@@ -5,40 +5,8 @@
 #include <pthread.h>
 #include <unistd.h>
 #include <time.h>
-
-#define TOLERANCE 1e-16
-
-typedef struct  {
-	double value;
-	pthread_mutex_t lock;
-} SharedAccumulator;
-
-int initSharedAccumulator(SharedAccumulator * acc){
-	acc->value = 0.0;
-	if (pthread_mutex_init(&acc->lock, NULL) != 0)
-        return 0;
-    return 1;
-}
-
-double getSharedAccumulatorValue(SharedAccumulator * acc){
-	double value;
-
-	pthread_mutex_lock(&acc->lock);
-	value = acc->value;
-	pthread_mutex_unlock(&acc->lock);
-
-	return value;
-}
-
-void addToSharedAccumulator(SharedAccumulator * acc, double addValue){
-	pthread_mutex_lock(&acc->lock);
-	acc->value += addValue;
-	pthread_mutex_unlock(&acc->lock);
-}
-
-int destroySharedAccumulator(SharedAccumulator * acc){
-	pthread_mutex_destroy(&acc->lock);
-}
+#include "shared_accumulator.h"
+#include "adaptive_quadrature.h"
 
 SharedAccumulator result;
 pthread_t * workers;
@@ -49,39 +17,6 @@ double RANGE_END = 15.0;
 double (*f)(double);
 
 pthread_mutex_t print_lock;
-
-double fTest(double num) {
-	int j;
-	double acc = 0.0;
-
-  	for (j=0;j<100000*num;j++)
-    	acc += exp(sqrt(num*j)*sin(num))/log(j+2.0)*sqrt(j/25)*exp((num*j)*exp(exp(1.0/(j+1.0))));
-
-	return acc;
-}
-
-double square (double num) {
-	return num * num;
-}
-
-inline double calcTrapezoidArea(double a, double b, double fa, double fb){
-	return (b - a) * (fa + fb) / 2.0;
-}
-
-double adaptiveQuadrature(double a, double b, double fa, double fb){
-	double m = (a + b) / 2.0;
-	double fm = f(m);
-
-	double larea = calcTrapezoidArea(a, m, fa, fm);
-	double rarea = calcTrapezoidArea(m, b, fm, fb);
-	double area = calcTrapezoidArea(a, b, fa, fb);
-
-	if(fabs(area - (larea + rarea)) >= TOLERANCE){
-		return adaptiveQuadrature(a, m, fa, fm) + adaptiveQuadrature(m, b, fm, fb);
-	}
-
-	return area;
-}
 
 void * worker(void * arg){
 	int threadId = *((int *) arg); // identificador da thread de envio
@@ -97,7 +32,7 @@ void * worker(void * arg){
 	double fa = f(a);
 	double fb = f(b);
 
-	double localResult = adaptiveQuadrature(a, b, fa, fb);
+	double localResult = adaptiveQuadrature(a, b, fa, fb, f);
 	addToSharedAccumulator(&result, localResult);
 
 	pthread_mutex_lock(&print_lock);

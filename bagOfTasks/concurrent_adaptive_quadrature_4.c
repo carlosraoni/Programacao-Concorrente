@@ -5,132 +5,9 @@
 #include <pthread.h>
 #include <unistd.h>
 #include <time.h>
-
-#define TOLERANCE 1e-16
-
-typedef struct  {
-	double value;
-	pthread_mutex_t lock;
-} SharedAccumulator;
-
-typedef struct {
-	double a, b;
-} Task;
-
-typedef struct Node {
-	Task task;
-	struct Node * prev;
-	struct Node * next;
-} TaskNode;
-
-typedef struct {
-	int size;
-	TaskNode * head;
-	TaskNode * tail;
-	pthread_mutex_t lock;
-} SharedTaskQueue;
-
-int initSharedTaskQueue(SharedTaskQueue * queue){
-	queue->size = 0;
-	queue->head = (TaskNode *) malloc(sizeof(TaskNode));
-	queue->tail = (TaskNode *) malloc(sizeof(TaskNode));
-
-	queue->head->prev = NULL;
-	queue->head->next = queue->tail;
-	queue->tail->prev = queue->head;
-	queue->tail->next = NULL;
-
-	if (pthread_mutex_init(&queue->lock, NULL) != 0)
-        return 0;
-
-    return 1;
-}
-
-int getSharedTaskQueueSize(SharedTaskQueue * queue){
-	int size;
-
-	pthread_mutex_lock(&queue->lock);
-	size = queue->size;
-	pthread_mutex_unlock(&queue->lock);
-
-	return size;
-}
-
-void enqueueToSharedTaskQueue(SharedTaskQueue * queue, double taskA, double taskB){
-	TaskNode * taskNode = (TaskNode *) malloc(sizeof(TaskNode));
-	Task newTask;
-
-	newTask.a = taskA;
-	newTask.b = taskB;
-	taskNode->task = newTask;
-
-	pthread_mutex_lock(&queue->lock);
-
-	taskNode->next = queue->head->next;
-	taskNode->prev = queue->head;
-	queue->head->next = taskNode;
-	taskNode->next->prev = taskNode;
-	queue->size++;
-
-	pthread_mutex_unlock(&queue->lock);
-}
-
-int dequeueToSharedTaskQueue(SharedTaskQueue * queue, Task * task){
-	TaskNode * taskNode;
-
-	pthread_mutex_lock(&queue->lock);
-
-	if(queue->size == 0){
-		pthread_mutex_unlock(&queue->lock);
-		return 0;
-	}
-
-	taskNode = queue->tail->prev;
-	*task = taskNode->task;
-
-	taskNode->prev->next = queue->tail;
-	queue->tail->prev = taskNode->prev;
-	queue->size--;
-
-	pthread_mutex_unlock(&queue->lock);
-
-	free(taskNode);
-
-	return 1;
-}
-
-int destroySharedTaskQueue(SharedTaskQueue * queue){
-	free(queue->head);
-	free(queue->tail);
-	pthread_mutex_destroy(&queue->lock);
-}
-
-int initSharedAccumulator(SharedAccumulator * acc){
-	acc->value = 0.0;
-	if (pthread_mutex_init(&acc->lock, NULL) != 0)
-        return 0;
-    return 1;
-}
-
-double getSharedAccumulatorValue(SharedAccumulator * acc){
-	double value;
-
-	pthread_mutex_lock(&acc->lock);
-	value = acc->value;
-	pthread_mutex_unlock(&acc->lock);
-
-	return value;
-}
-
-void addToSharedAccumulator(SharedAccumulator * acc, double addValue){
-	pthread_mutex_lock(&acc->lock);
-	acc->value += addValue;
-	pthread_mutex_unlock(&acc->lock);
-}
-
-int destroySharedAccumulator(SharedAccumulator * acc){
-	pthread_mutex_destroy(&acc->lock);
-}
+#include "shared_accumulator.h"
+#include "shared_task_queue.h"
+#include "adaptive_quadrature.h"
 
 SharedTaskQueue * taskQueues;
 SharedAccumulator result;
@@ -144,42 +21,9 @@ double (*f)(double);
 
 pthread_mutex_t print_lock;
 
-double fTest(double num) {
-	int j;
-	double acc = 0.0;
-
-  	for (j=0;j<100000*num;j++)
-    	acc += exp(sqrt(num*j)*sin(num))/log(j+2.0)*sqrt(j/25)*exp((num*j)*exp(exp(1.0/(j+1.0))));
-
-	return acc;
-}
-
-double square (double num) {
-	return num * num;
-}
-
-inline double calcTrapezoidArea(double a, double b, double fa, double fb){
-	return (b - a) * (fa + fb) / 2.0;
-}
-
-double adaptiveQuadrature(double a, double b, double fa, double fb){
-	double m = (a + b) / 2.0;
-	double fm = f(m);
-
-	double larea = calcTrapezoidArea(a, m, fa, fm);
-	double rarea = calcTrapezoidArea(m, b, fm, fb);
-	double area = calcTrapezoidArea(a, b, fa, fb);
-
-	if(fabs(area - (larea + rarea)) >= TOLERANCE){
-		return adaptiveQuadrature(a, m, fa, fm) + adaptiveQuadrature(m, b, fm, fb);
-	}
-
-	return area;
-}
-
 void * worker(void * arg){
 	int threadId = *((int *) arg); // identificador da thread de envio
-	double a, b, fa, fb, m, fm;
+	double a, b, m, fa, fb, fm, area;
 	double localAccumulator = 0.0;
 	int i, pendingTaskFound = 1;
 	Task currentTask;
@@ -195,16 +39,9 @@ void * worker(void * arg){
 		fa = f(a);
 		fb = f(b);
 
-		m = (a + b) / 2.0;
-		fm = f(m);
-
-		double larea = calcTrapezoidArea(a, m, fa, fm);
-		double rarea = calcTrapezoidArea(m, b, fm, fb);
-		double area = calcTrapezoidArea(a, b, fa, fb);
-
-		if(fabs(area - (larea + rarea)) >= TOLERANCE){
+		if(splitQuadratureTest(a, b, fa, fb, &m, &fm, &area, f)){
 			enqueueToSharedTaskQueue(&taskQueues[threadId], a, m); // Coloca o primeiro trapezio da fila
-			localAccumulator += adaptiveQuadrature(m, b, fm, fb); // Processa o segundo trapezio
+			localAccumulator += adaptiveQuadrature(m, b, fm, fb, f); // Processa o segundo trapezio
 		}
 		else{
 			localAccumulator += area;
@@ -231,7 +68,7 @@ void * worker(void * arg){
 			fa = f(a);
 			fb = f(b);
 
-			localAccumulator += adaptiveQuadrature(a, b, fa, fb);
+			localAccumulator += adaptiveQuadrature(a, b, fa, fb, f);
 		}
 	}
 
