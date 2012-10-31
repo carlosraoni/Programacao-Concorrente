@@ -1,9 +1,9 @@
 #include "shared_accumulator.h"
 
 int initSharedAccumulator(SharedAccumulator * acc){
-	acc->value = 0.0;
 	if (pthread_mutex_init(&acc->lock, NULL) != 0)
         return 0;
+	acc->value = 0.0;
     return 1;
 }
 

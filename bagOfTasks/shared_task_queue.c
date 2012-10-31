@@ -2,6 +2,9 @@
 #include "shared_task_queue.h"
 
 int initSharedTaskQueue(SharedTaskQueue * queue){
+	if (pthread_mutex_init(&queue->lock, NULL) != 0)
+        return 0;
+
 	queue->size = 0;
 	queue->head = (TaskNode *) malloc(sizeof(TaskNode));
 	queue->tail = (TaskNode *) malloc(sizeof(TaskNode));
@@ -10,9 +13,6 @@ int initSharedTaskQueue(SharedTaskQueue * queue){
 	queue->head->next = queue->tail;
 	queue->tail->prev = queue->head;
 	queue->tail->next = NULL;
-
-	if (pthread_mutex_init(&queue->lock, NULL) != 0)
-        return 0;
 
     return 1;
 }
