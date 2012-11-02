@@ -16,7 +16,9 @@ double RANGE_INI = 0.0;
 double RANGE_END = 15.0;
 double (*f)(double);
 
+#ifdef VERBOSE
 pthread_mutex_t print_lock;
+#endif
 
 void * worker(void * arg){
 	int threadId = *((int *) arg); // identificador da thread de envio
@@ -24,20 +26,27 @@ void * worker(void * arg){
 	double slice = (RANGE_END - RANGE_INI) / NWORKERS;
 	double a = RANGE_INI + threadId * slice;
 	double b = a + slice;
+	double fa, fb, localResult;
 
+#ifdef VERBOSE
 	pthread_mutex_lock(&print_lock);
 	printf("Thread %d starting to solve range [%.2f, %.2f]\n", threadId, a, b);
 	pthread_mutex_unlock(&print_lock);
+#endif
 
-	double fa = f(a);
-	double fb = f(b);
+	fa = f(a);
+	fb = f(b);
 
-	double localResult = adaptiveQuadrature(a, b, fa, fb, f);
+	localResult = adaptiveQuadrature(a, b, fa, fb, f);
 	addToSharedAccumulator(&result, localResult);
 
+#ifdef VERBOSE
 	pthread_mutex_lock(&print_lock);
 	printf("Thread %d result to range [%.2f, %.2f] = %f\n", threadId, a, b, localResult);
 	pthread_mutex_unlock(&print_lock);
+#endif
+
+	return NULL;
 }
 
 int main(int argc, char ** argv){
@@ -62,16 +71,18 @@ int main(int argc, char ** argv){
     printf("RANGE_END = %.2f\n", RANGE_END);
 
 	f = square;
-	//f = fTest;
+	//f = foo;
 
 	if(!initSharedAccumulator(&result)){
 		printf("Error initializing shared result!\n");
 		return 1;
 	}
+#ifdef VERBOSE
 	if (pthread_mutex_init(&print_lock, NULL) != 0){
 		printf("Error initializing printing mutex!\n");
         return 1;
 	}
+#endif
 
 	workers = (pthread_t *) malloc(NWORKERS * sizeof(pthread_t));
 	ids = (int *) malloc(NWORKERS * sizeof(int));

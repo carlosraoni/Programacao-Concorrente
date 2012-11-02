@@ -9,8 +9,11 @@
 #include "shared_task_queue.h"
 #include "adaptive_quadrature.h"
 
+const double EPS = 1e-9;
+
 SharedTaskQueue * taskQueues;
 SharedAccumulator result;
+SharedAccumulator calculatedRange;
 pthread_t * workers;
 
 int NWORKERS = 2;
@@ -19,7 +22,13 @@ double RANGE_INI = 0.0;
 double RANGE_END = 15.0;
 double (*f)(double);
 
+#ifdef VERBOSE
 pthread_mutex_t print_lock;
+#endif
+
+int isRangeCompleteCalculated(){
+	return fabs((RANGE_END - RANGE_INI) - getSharedAccumulatorValue(&calculatedRange)) < EPS;
+}
 
 void * worker(void * arg){
 	int threadId = *((int *) arg); // identificador da thread de envio
@@ -32,27 +41,33 @@ void * worker(void * arg){
 		a = currentTask.a;
 		b = currentTask.b;
 
+#ifdef VERBOSE
 		pthread_mutex_lock(&print_lock);
 		printf("Thread %d starting to solve task [%f, %f]\n", threadId, a, b);
 		pthread_mutex_unlock(&print_lock);
-
-		fa = f(a);
-		fb = f(b);
+#endif
+		fa = (currentTask.fValuesAvailable) ? currentTask.fa : f(a);
+		fb = (currentTask.fValuesAvailable) ? currentTask.fb : f(b);
 
 		if(splitQuadratureTest(a, b, fa, fb, &m, &fm, &area, f)){
-			enqueueToSharedTaskQueue(&taskQueues[threadId], a, m); // Coloca o primeiro trapezio da fila
+			enqueueToSharedTaskQueueWithFValues(&taskQueues[threadId], a, m, fa, fm); // Coloca o primeiro trapezio da fila
 			localAccumulator += adaptiveQuadrature(m, b, fm, fb, f); // Processa o segundo trapezio
+			addToSharedAccumulator(&calculatedRange, b - m);
 		}
 		else{
 			localAccumulator += area;
+			addToSharedAccumulator(&calculatedRange, b - a);
 		}
 
+#ifdef VERBOSE
 		pthread_mutex_lock(&print_lock);
 		printf("Thread %d processed task [%f, %f]\n", threadId, a, b);
 		pthread_mutex_unlock(&print_lock);
+#endif
+
 	}
 
-	while(pendingTaskFound){
+	while(!isRangeCompleteCalculated()){
 		pendingTaskFound = 0;
 		for(i=0; i<NWORKERS; i++){
 			if(i == threadId) continue;
@@ -65,18 +80,23 @@ void * worker(void * arg){
 			a = currentTask.a;
 			b = currentTask.b;
 
-			fa = f(a);
-			fb = f(b);
+			fa = (currentTask.fValuesAvailable) ? currentTask.fa : f(a);
+			fb = (currentTask.fValuesAvailable) ? currentTask.fb : f(b);
 
 			localAccumulator += adaptiveQuadrature(a, b, fa, fb, f);
+			addToSharedAccumulator(&calculatedRange, b - a);
 		}
 	}
 
+#ifdef VERBOSE
 	pthread_mutex_lock(&print_lock);
 	printf("Thread %d finished tasks = %f\n", threadId, localAccumulator);
 	pthread_mutex_unlock(&print_lock);
+#endif
 
 	addToSharedAccumulator(&result, localAccumulator);
+
+	return NULL;
 }
 
 int createTaskQueues(){
@@ -142,14 +162,21 @@ int main(int argc, char ** argv){
 		printf("Error initializing shared result!\n");
 		return 1;
 	}
-	if (pthread_mutex_init(&print_lock, NULL) != 0){
-		printf("Error initializing printing mutex!\n");
-        return 1;
+	if(!initSharedAccumulator(&calculatedRange)){
+		printf("Error initializing shared calculated range!\n");
+		return 1;
 	}
 	if(!createTaskQueues()){
 		printf("Error initializing task queues!\n");
         return 1;
 	}
+#ifdef VERBOSE
+	if (pthread_mutex_init(&print_lock, NULL) != 0){
+		printf("Error initializing printing mutex!\n");
+        return 1;
+	}
+#endif
+
 	createTasks();
 
 	workers = (pthread_t *) malloc(NWORKERS * sizeof(pthread_t));
@@ -178,6 +205,7 @@ int main(int argc, char ** argv){
 	free(workers);
 	free(ids);
 	destroySharedAccumulator(&result);
+	destroySharedAccumulator(&calculatedRange);
 	destroyTaskQueues();
 
 	return 0;

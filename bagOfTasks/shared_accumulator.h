@@ -14,6 +14,6 @@ double getSharedAccumulatorValue(SharedAccumulator * acc);
 
 void addToSharedAccumulator(SharedAccumulator * acc, double addValue);
 
-int destroySharedAccumulator(SharedAccumulator * acc);
+void destroySharedAccumulator(SharedAccumulator * acc);
 
 #endif // SHARED_ACCUMULATOR_H

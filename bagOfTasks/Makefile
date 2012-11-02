@@ -1,5 +1,10 @@
 CC := gcc
-CFLAGS := -pthread -lm
+
+ifeq ($(VERBOSE), 1)
+	CFLAGS := -pthread -lm -Wall -DVERBOSE
+else
+	CFLAGS := -pthread -lm -Wall
+endif
 
 OBJECTS:= shared_accumulator.o shared_task_queue.o adaptive_quadrature.o
 

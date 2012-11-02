@@ -19,48 +19,60 @@ double RANGE_INI = 0.0;
 double RANGE_END = 15.0;
 double (*f)(double);
 
+#ifdef VERBOSE
 pthread_mutex_t print_lock;
+#endif
 
 void * worker(void * arg){
 	int threadId = *((int *) arg); // identificador da thread de envio
+	double a, b, fa, fb, taskResult;
 	double localAccumulator = 0.0;
 	Task currentTask;
 
 	while(dequeueToSharedTaskQueue(&taskQueue, &currentTask)){
-		double a = currentTask.a;
-		double b = currentTask.b;
+		a = currentTask.a;
+		b = currentTask.b;
 
+#ifdef VERBOSE
 		pthread_mutex_lock(&print_lock);
 		printf("Thread %d starting to solve task [%.2f, %.2f]\n", threadId, a, b);
 		pthread_mutex_unlock(&print_lock);
+#endif
 
-		double fa = f(a);
-		double fb = f(b);
+		fa = f(a);
+		fb = f(b);
 
-		double taskResult = adaptiveQuadrature(a, b, fa, fb, f);
+		taskResult = adaptiveQuadrature(a, b, fa, fb, f);
 
+#ifdef VERBOSE
 		pthread_mutex_lock(&print_lock);
 		printf("Thread %d result to task [%.2f, %.2f] = %f\n", threadId, a, b, taskResult);
 		printf("Pending Tasks: %d\n", getSharedTaskQueueSize(&taskQueue));
 		pthread_mutex_unlock(&print_lock);
+#endif
 
 		localAccumulator += taskResult;
 	}
 
+#ifdef VERBOSE
 	pthread_mutex_lock(&print_lock);
 	printf("Thread %d finished tasks = %f\n", threadId, localAccumulator);
 	pthread_mutex_unlock(&print_lock);
+#endif
 
 	addToSharedAccumulator(&result, localAccumulator);
+
+	return NULL;
 }
 
 void createTasks(){
 	int i;
 	double slice = (RANGE_END - RANGE_INI) / NTASKS;
+	double a, b;
 
 	for(i = 0; i < NTASKS; i++){
-		double a = RANGE_INI + i * slice;
-		double b = a + slice;
+		a = RANGE_INI + i * slice;
+		b = a + slice;
 
 		enqueueToSharedTaskQueue(&taskQueue, a, b);
 	}
@@ -100,10 +112,12 @@ int main(int argc, char ** argv){
 		printf("Error initializing shared task queue!\n");
 		return 1;
 	}
+#ifdef VERBOSE
 	if (pthread_mutex_init(&print_lock, NULL) != 0){
 		printf("Error initializing printing mutex!\n");
         return 1;
 	}
+#endif
 
 	createTasks();
 

@@ -4,7 +4,8 @@
 #include <pthread.h>
 
 typedef struct {
-	double a, b;
+	double a, b, fa, fb;
+	char fValuesAvailable;
 } Task;
 
 typedef struct Node {
@@ -26,8 +27,10 @@ int getSharedTaskQueueSize(SharedTaskQueue * queue);
 
 void enqueueToSharedTaskQueue(SharedTaskQueue * queue, double taskA, double taskB);
 
+void enqueueToSharedTaskQueueWithFValues(SharedTaskQueue * queue, double taskA, double taskB, double fa, double fb);
+
 int dequeueToSharedTaskQueue(SharedTaskQueue * queue, Task * task);
 
-int destroySharedTaskQueue(SharedTaskQueue * queue);
+void destroySharedTaskQueue(SharedTaskQueue * queue);
 
 #endif // SHARED_TASK_QUEUE_H

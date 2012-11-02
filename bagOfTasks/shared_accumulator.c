@@ -23,7 +23,7 @@ void addToSharedAccumulator(SharedAccumulator * acc, double addValue){
 	pthread_mutex_unlock(&acc->lock);
 }
 
-int destroySharedAccumulator(SharedAccumulator * acc){
+void destroySharedAccumulator(SharedAccumulator * acc){
 	pthread_mutex_destroy(&acc->lock);
 }
 

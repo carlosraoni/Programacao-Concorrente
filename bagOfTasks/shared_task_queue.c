@@ -27,14 +27,7 @@ int getSharedTaskQueueSize(SharedTaskQueue * queue){
 	return size;
 }
 
-void enqueueToSharedTaskQueue(SharedTaskQueue * queue, double taskA, double taskB){
-	TaskNode * taskNode = (TaskNode *) malloc(sizeof(TaskNode));
-	Task newTask;
-
-	newTask.a = taskA;
-	newTask.b = taskB;
-	taskNode->task = newTask;
-
+void enqueueTaskNode(SharedTaskQueue * queue, TaskNode * taskNode){
 	pthread_mutex_lock(&queue->lock);
 
 	taskNode->next = queue->head->next;
@@ -44,6 +37,32 @@ void enqueueToSharedTaskQueue(SharedTaskQueue * queue, double taskA, double task
 	queue->size++;
 
 	pthread_mutex_unlock(&queue->lock);
+}
+
+void enqueueToSharedTaskQueue(SharedTaskQueue * queue, double taskA, double taskB){
+	TaskNode * taskNode = (TaskNode *) malloc(sizeof(TaskNode));
+	Task newTask;
+
+	newTask.a = taskA;
+	newTask.b = taskB;
+	newTask.fValuesAvailable = 0;
+	taskNode->task = newTask;
+
+	enqueueTaskNode(queue, taskNode);
+}
+
+void enqueueToSharedTaskQueueWithFValues(SharedTaskQueue * queue, double taskA, double taskB, double fa, double fb){
+	TaskNode * taskNode = (TaskNode *) malloc(sizeof(TaskNode));
+	Task newTask;
+
+	newTask.a = taskA;
+	newTask.b = taskB;
+	newTask.fa = fa;
+	newTask.fb = fb;
+	newTask.fValuesAvailable = 1;
+	taskNode->task = newTask;
+
+	enqueueTaskNode(queue, taskNode);
 }
 
 int dequeueToSharedTaskQueue(SharedTaskQueue * queue, Task * task){
@@ -70,7 +89,7 @@ int dequeueToSharedTaskQueue(SharedTaskQueue * queue, Task * task){
 	return 1;
 }
 
-int destroySharedTaskQueue(SharedTaskQueue * queue){
+void destroySharedTaskQueue(SharedTaskQueue * queue){
 	free(queue->head);
 	free(queue->tail);
 	pthread_mutex_destroy(&queue->lock);
