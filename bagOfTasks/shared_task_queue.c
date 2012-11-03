@@ -32,11 +32,11 @@ int getSharedTaskQueueSize(SharedTaskQueue * queue){
 	return size;
 }
 
-// Inseri um nó tarefa na lista compartilhada de tarefas
+// Insere um nó tarefa na lista compartilhada de tarefas
 void enqueueTaskNode(SharedTaskQueue * queue, TaskNode * taskNode){
 	pthread_mutex_lock(&queue->lock); // Obtém lock da fila para alteração da mesma.
 
-	// Inseri nó como próximo elemento do cabeçalho da fila, atualizando devidamente os ponteiros da lista duplamente encadeada.
+	// Insere nó como próximo elemento do cabeçalho da fila, atualizando devidamente os ponteiros da lista duplamente encadeada.
 	taskNode->next = queue->head->next;
 	taskNode->prev = queue->head;
 	queue->head->next = taskNode;
@@ -57,7 +57,7 @@ void enqueueToSharedTaskQueue(SharedTaskQueue * queue, double a, double b){
 	newTask.fValuesAvailable = 0; // Tarefa sem a disponibilidade dos valores da função nos limites do intervalo [a,b].
 	taskNode->task = newTask; // Atribui a nova tarefa ao nó a ser inserido na lista.
 
-	// Inseri novo nó tarefa na lista
+	// Insere novo nó tarefa na lista
 	enqueueTaskNode(queue, taskNode);
 }
 
@@ -74,7 +74,7 @@ void enqueueToSharedTaskQueueWithFValues(SharedTaskQueue * queue, double a, doub
 	newTask.fValuesAvailable = 1; // Indica a disponibilidade dos valores da função nos limites do intervalo [a,b].
 	taskNode->task = newTask; // Atribui a nova tarefa ao nó a ser inserido na lista.
 
-	// Inseri novo nó tarefa na lista
+	// Insere novo nó tarefa na lista
 	enqueueTaskNode(queue, taskNode);
 }
 
