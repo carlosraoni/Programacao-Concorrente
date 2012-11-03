@@ -23,9 +23,10 @@ double RANGE_END = 15.0; // Fim do intervalo para o qual se deseja calcular a in
 double (*f)(double); // Ponteiro para a função para o qual se deseja calcular a integral da função
 
 #ifdef VERBOSE
-pthread_mutex_t print_lock;
+pthread_mutex_t print_lock; // Mutex utilizado para impressão de informações pelas threads trabalhadoras
 #endif
 
+// Função principal das threads trabalhadoras
 void * worker(void * arg){
 	int threadId = *((int *) arg); // Identificador da thread
 	double a, b, fa, fb; // Limites do intervalo [a,b] e valores da função nos mesmos fa e fb
