@@ -3,13 +3,16 @@
 
 // Arquivo cabeçalho que define as funções utilizadas no método de quadratura adaptativa de cálculo de integral.
 
-#define TOLERANCE 1e-16
+#define TOLERANCE 1e-6
 
 // Função definida para os testes do método de quadratura adaptativa.
 double foo(double num);
 
 // Função x^2.
 double square (double num);
+
+// Função do Marcio e do Bruno
+double fmb(double num);
 
 // Determina a área do trapézio definido pelo intervalo [a, b].
 double calcTrapezoidArea(double a, double b, double fa, double fb);

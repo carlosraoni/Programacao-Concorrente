@@ -180,8 +180,9 @@ int main(int argc, char ** argv){
     printf("RANGE_INI = %.2f\n", RANGE_INI);
     printf("RANGE_END = %.2f\n", RANGE_END);
 
-	f = square; // Utilizar a função x^2 nos testes
+	//f = square; // Utilizar a função x^2 nos testes
 	//f = foo;  // Utilizar a função da Noemi nos testes
+	f = fmb;
 
 	// Inicialização das variáveis globais
 	if(!initSharedAccumulator(&result)){
