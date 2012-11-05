@@ -1,7 +1,7 @@
 #!/bin/bash
 
 NEXEC=2
-NWORKERS=("16" "32" "64")
+NWORKERS=("2" "4" "8" "16")
 NTASKS=("10" "100" "1000")
 RINI=0
 REND=15

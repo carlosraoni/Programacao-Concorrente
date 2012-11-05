@@ -82,19 +82,6 @@ int main(int argc, char ** argv){
 	//f = fmb;
 	f = fl;
 
-/*	begin = clock(); // Clock de início do método
-	for(i=0; i<=10; i++){
-		double n = (15.0/10.0) * i;
-		printf("f(%f) = %f \n", n, f(n));
-	}
-	end = clock(); // Clock de fim do método
-	timeSpent = (double) (end - begin) / CLOCKS_PER_SEC; // Determina o tempo total gasto
-	printf("Total Execution Time: %.3f (s)\n", timeSpent);
-	if(1){
-		return 1;
-	}
-*/
-
 	// Inicialização das variáveis globais
 	if(!initSharedAccumulator(&result)){
 		printf("Error initializing shared result!\n");

@@ -1,9 +1,9 @@
 CC := gcc
 
 ifeq ($(VERBOSE), 1)
-	CFLAGS := -pthread -lm -Wall -DVERBOSE
+	CFLAGS := -lpthread -lm -Wall -DVERBOSE
 else
-	CFLAGS := -pthread -lm -Wall
+	CFLAGS := -lpthread -lm -Wall
 endif
 
 OBJECTS:= shared_accumulator.o shared_task_queue.o adaptive_quadrature.o
