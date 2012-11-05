@@ -3,6 +3,20 @@
 #include <stdio.h>
 #include "adaptive_quadrature.h"
 
+double fl(double num)
+{
+  int j;
+  double acc = 0.0;
+  for(j = 0; j < 10*num; ++j)
+  {
+    double a = sqrt(num*j)*sin(num);
+    double b = log((double)(j+2));
+    double c = sqrt((double)j/25);
+    acc += a/b*c;
+  }
+  return acc;
+}
+
 double fmb (double num){
        int i,j;
        double res = 0.0;
@@ -59,12 +73,10 @@ double adaptiveQuadrature(double a, double b, double fa, double fb, double (*f)(
 
 	// Testa se a área do trapézio [a,b] excede a tolerância definida
 	if(splitQuadratureTest(a, b, fa, fb, &m, &fm, &area, f)){
-		//printf("Split\n");
 		// Em caso afirmativo, refina o cálculo dos trapézios a esquerda e a direita do ponto médio m do intervalo [a,b]
 		return adaptiveQuadrature(a, m, fa, fm, f) + adaptiveQuadrature(m, b, fm, fb, f);
 	}
 
-	//printf("Area\n");
 	// Caso contrário, retorna a área do trapézio [a,b], pois o mesmo obedece a tolerância de aproximação da integral
 	return area;
 }
