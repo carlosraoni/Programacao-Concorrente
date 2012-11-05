@@ -115,7 +115,8 @@ int main(int argc, char ** argv){
 
 	//f = square; // Utilizar a função x^2 nos testes
 	//f = foo;  // Utilizar a função da Noemi nos testes
-	f = fmb;
+	//f = fmb;
+	f = fl;
 
 	// Inicialização das variáveis globais
 	if(!initSharedAccumulator(&result)){
