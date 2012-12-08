@@ -190,8 +190,8 @@ DList!Tid createWorkers(){
 
 	for(int i=0; i<NWORKERS; i++){
 		// Cria a thread trabalhadora e inseri na fila de threads livres
-		Tid tid = spawn(&worker, thisTid, &square);
-		//Tid tid = spawn(&worker, thisTid, &fl);
+		//Tid tid = spawn(&worker, thisTid, &square);
+		Tid tid = spawn(&worker, thisTid, &fl);
 		idleQueue.insertFront(tid);
 	}
 
