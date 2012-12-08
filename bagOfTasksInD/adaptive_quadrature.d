@@ -1,4 +1,5 @@
 import std.stdio, std.math, std.string, std.conv, std.container, std.concurrency;
+import core.time;
 
 int NWORKERS = 2;
 int NTASKS = 1000;
@@ -170,8 +171,16 @@ void main(string[] args){
 	writefln("RANGE_END = %.2f\n", RANGE_END);
 
 	createTasks();
+
+	TickDuration tb = TickDuration.currSystemTick();
+
 	createWorkers();
 	master();
+
+	TickDuration ta = TickDuration.currSystemTick();
+
+    long timeMsecs = (ta-tb).msecs();
+	writeln("Total time: ", timeMsecs / 1000, ".", timeMsecs % 1000, "s");
 
 	//writeln("Resultado: ", adaptiveQuadrature(RANGE_INI, RANGE_END, square(RANGE_INI), square(RANGE_END), &square));
 }
