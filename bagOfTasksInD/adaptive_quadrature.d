@@ -228,6 +228,6 @@ void main(string[] args){
     long timeMsecs = (ta-tb).msecs(); // Determina o tempo em milisegundos
 
     // Exibe o tempo total de execução em segundos
-	writeln("Total Execution time: ", timeMsecs / 1000, ".", timeMsecs % 1000, "s");
+	writeln("Total Execution Time: ", timeMsecs / 1000, ".", timeMsecs % 1000, " (s)");
 
 }
