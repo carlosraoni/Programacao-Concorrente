@@ -1,0 +1,309 @@
+In file included from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/hash_map.h:59,
+                 from ts.cpp:3:
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/backward_warning.h:32:2: warning: #warning This file includes at least one deprecated or antiquated header. Please consider using one of the 32 headers found in section 17.4.1.2 of the C++ standard. Examples include substituting the <X> header for the <X.h> header for C++ includes, or <iostream> instead of the deprecated header <iostream.h>. To disable this warning use -Wno-deprecated.
+In file included from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/memory:61,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/string:48,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/locale_classes.h:47,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/ios_base.h:47,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/ios:49,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/ostream:45,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/iostream:45,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/iostream.h:32,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/iterator.h:62,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/algobase.h:60,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/hash_map.h:60,
+                 from ts.cpp:3:
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:290:22: macro "min" requires 2 arguments, but only 1 given
+In file included from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/memory:61,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/string:48,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/locale_classes.h:47,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/ios_base.h:47,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/ios:49,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/ostream:45,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/iostream:45,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/iostream.h:32,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/iterator.h:62,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/algobase.h:60,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/hash_map.h:60,
+                 from ts.cpp:3:
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:290: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:292: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:292:22: macro "max" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:292: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:295: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:318:23: macro "min" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:318: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:320: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:320:23: macro "max" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:320: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:323: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:371:23: macro "min" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:371: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:373: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:373:23: macro "max" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:373: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:376: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:421:30: macro "min" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:421: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:423: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:423:30: macro "max" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:423: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:426: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:471:32: macro "min" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:471: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:473: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:473:32: macro "max" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:473: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:476: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:521:26: macro "min" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:521: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:523: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:523:26: macro "max" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:523: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:526: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:571:24: macro "min" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:571: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:573: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:573:24: macro "max" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:573: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:576: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:621:33: macro "min" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:621: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:623: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:623:33: macro "max" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:623: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:626: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:671:22: macro "min" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:671: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:673: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:673:22: macro "max" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:673: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:676: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:721:31: macro "min" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:721: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:723: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:723:31: macro "max" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:723: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:726: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:771:23: macro "min" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:771: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:773: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:773:23: macro "max" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:773: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:776: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:821:32: macro "min" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:821: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:823: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:823:32: macro "max" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:823: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:826: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:871:28: macro "min" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:871: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:873: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:873:28: macro "max" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:873: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:876: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:921:37: macro "min" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:921: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:923: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:923:37: macro "max" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:923: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:926: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:971:24: macro "min" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:971: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:973: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:973:24: macro "max" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:973: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:976: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:1027:25: macro "min" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:1027: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:1029: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:1029:25: macro "max" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:1029: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:1032: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:1083:30: macro "min" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:1083: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:1085: error: expected `;' before "static"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:1085:30: macro "max" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:1085: error: expected `;' before "throw"
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/limits:1088: error: expected `;' before "static"
+In file included from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/string:48,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/locale_classes.h:47,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/ios_base.h:47,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/ios:49,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/ostream:45,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/iostream:45,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/iostream.h:32,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/iterator.h:62,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/algobase.h:60,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/hash_map.h:60,
+                 from ts.cpp:3:
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/memory:77:62: macro "max" requires 2 arguments, but only 1 given
+In file included from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/string:48,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/locale_classes.h:47,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/ios_base.h:47,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/ios:49,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/ostream:45,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/iostream:45,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/iostream.h:32,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/iterator.h:62,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/algobase.h:60,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/hash_map.h:60,
+                 from ts.cpp:3:
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/memory: In function `std::pair<_Tp*, ptrdiff_t> std::__get_temporary_buffer(ptrdiff_t, _Tp*)':
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/memory:77: error: `max' is not a member of `std::numeric_limits<int>'
+In file included from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/string:53,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/locale_classes.h:47,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/ios_base.h:47,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/ios:49,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/ostream:45,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/iostream:45,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/iostream.h:32,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/iterator.h:62,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/algobase.h:60,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/hash_map.h:60,
+                 from ts.cpp:3:
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/basic_string.h: In member function `int std::basic_string<_CharT, _Traits, _Alloc>::compare(const std::basic_string<_CharT, _Traits, _Alloc>&) const':
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/basic_string.h:1864: error: expected unqualified-id before '(' token
+In file included from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/algorithm:69,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/string:56,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/locale_classes.h:47,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/ios_base.h:47,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/ios:49,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/ostream:45,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/iostream:45,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/iostream.h:32,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/iterator.h:62,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/algobase.h:60,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/hash_map.h:60,
+                 from ts.cpp:3:
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/stl_algo.h: In function `void std::__merge_sort_loop(_RandomAccessIterator1, _RandomAccessIterator1, _RandomAccessIterator2, _Distance)':
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/stl_algo.h:3072: error: expected unqualified-id before '(' token
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/stl_algo.h: In function `void std::__merge_sort_loop(_RandomAccessIterator1, _RandomAccessIterator1, _RandomAccessIterator2, _Distance, _Compare)':
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/stl_algo.h:3095: error: expected unqualified-id before '(' token
+In file included from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/string:57,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/locale_classes.h:47,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/ios_base.h:47,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/ios:49,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/ostream:45,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/iostream:45,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/iostream.h:32,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/iterator.h:62,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/algobase.h:60,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/hash_map.h:60,
+                 from ts.cpp:3:
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/basic_string.tcc: In member function `typename std::basic_string<_CharT, _Traits, _Alloc>::size_type std::basic_string<_CharT, _Traits, _Alloc>::rfind(const _CharT*, typename _Alloc::size_type, typename _Alloc::size_type) const':
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/basic_string.tcc:730: error: expected unqualified-id before '(' token
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/basic_string.tcc: In member function `int std::basic_string<_CharT, _Traits, _Alloc>::compare(typename _Alloc::size_type, typename _Alloc::size_type, const std::basic_string<_CharT, _Traits, _Alloc>&) const':
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/basic_string.tcc:867: error: expected unqualified-id before '(' token
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/basic_string.tcc: In member function `int std::basic_string<_CharT, _Traits, _Alloc>::compare(typename _Alloc::size_type, typename _Alloc::size_type, const std::basic_string<_CharT, _Traits, _Alloc>&, typename _Alloc::size_type, typename _Alloc::size_type) const':
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/basic_string.tcc:884: error: expected unqualified-id before '(' token
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/basic_string.tcc: In member function `int std::basic_string<_CharT, _Traits, _Alloc>::compare(const _CharT*) const':
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/basic_string.tcc:900: error: expected unqualified-id before '(' token
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/basic_string.tcc: In member function `int std::basic_string<_CharT, _Traits, _Alloc>::compare(typename _Alloc::size_type, typename _Alloc::size_type, const _CharT*) const':
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/basic_string.tcc:916: error: expected unqualified-id before '(' token
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/basic_string.tcc: In member function `int std::basic_string<_CharT, _Traits, _Alloc>::compare(typename _Alloc::size_type, typename _Alloc::size_type, const _CharT*, typename _Alloc::size_type) const':
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/basic_string.tcc:932: error: expected unqualified-id before '(' token
+In file included from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/streambuf:781,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/ios:50,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/ostream:45,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/iostream:45,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/iostream.h:32,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/iterator.h:62,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/algobase.h:60,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/hash_map.h:60,
+                 from ts.cpp:3:
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/streambuf.tcc: In member function `virtual std::streamsize std::basic_streambuf<_CharT, _Traits>::xsgetn(_CharT*, std::streamsize)':
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/streambuf.tcc:54: error: expected unqualified-id before '(' token
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/streambuf.tcc: In member function `virtual std::streamsize std::basic_streambuf<_CharT, _Traits>::xsputn(const _CharT*, std::streamsize)':
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/streambuf.tcc:88: error: expected unqualified-id before '(' token
+In file included from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/codecvt.h:475,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/locale_facets.h:1537,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/basic_ios.h:44,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/ios:51,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/ostream:45,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/iostream:45,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/iostream.h:32,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/iterator.h:62,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/algobase.h:60,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/hash_map.h:60,
+                 from ts.cpp:3:
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/i686-pc-linux-gnu/bits/codecvt_specializations.h: In member function `virtual int std::codecvt<_InternT, _ExternT, std::__enc_traits>::do_length(std::__enc_traits&, const _ExternT*, const _ExternT*, size_t) const':
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/i686-pc-linux-gnu/bits/codecvt_specializations.h:469: error: expected unqualified-id before '(' token
+In file included from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/locale:47,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/ostream.tcc:40,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/ostream:547,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/iostream:45,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/iostream.h:32,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/iterator.h:62,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/algobase.h:60,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/hash_map.h:60,
+                 from ts.cpp:3:
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/locale_facets.tcc:515:57: macro "min" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/locale_facets.tcc:562:57: macro "max" requires 2 arguments, but only 1 given
+In file included from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/locale:47,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/ostream.tcc:40,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/ostream:547,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/iostream:45,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/iostream.h:32,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/iterator.h:62,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/algobase.h:60,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/hash_map.h:60,
+                 from ts.cpp:3:
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/locale_facets.tcc: In member function `_InIter std::time_get<_CharT, _InIter>::_M_extract_name(_InIter, _InIter, int&, const _CharT**, size_t, std::ios_base&, std::_Ios_Iostate&) const':
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/locale_facets.tcc:2003: error: expected unqualified-id before '(' token
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/locale_facets.tcc: In function `bool std::__verify_grouping(const char*, size_t, const std::string&)':
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/locale_facets.tcc:2446: error: expected unqualified-id before '(' token
+In file included from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/istream:773,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/iostream:46,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/iostream.h:32,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/iterator.h:62,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/algobase.h:60,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/hash_map.h:60,
+                 from ts.cpp:3:
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/istream.tcc:146:36: macro "min" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/istream.tcc:147:46: macro "max" requires 2 arguments, but only 1 given
+In file included from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/istream:773,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/iostream:46,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/iostream.h:32,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/iterator.h:62,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/algobase.h:60,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/hash_map.h:60,
+                 from ts.cpp:3:
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/istream.tcc: In member function `std::basic_istream<_CharT, _Traits>& std::basic_istream<_CharT, _Traits>::operator>>(short int&)':
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/istream.tcc:146: error: `min' is not a member of `std::numeric_limits<short int>'
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/istream.tcc:147: error: `max' is not a member of `std::numeric_limits<short int>'
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/istream.tcc:199:34: macro "min" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/istream.tcc:200:44: macro "max" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/istream.tcc: In member function `std::basic_istream<_CharT, _Traits>& std::basic_istream<_CharT, _Traits>::operator>>(int&)':
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/istream.tcc:199: error: `min' is not a member of `std::numeric_limits<int>'
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/istream.tcc:200: error: `max' is not a member of `std::numeric_limits<int>'
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/istream.tcc: In member function `std::basic_istream<_CharT, _Traits>& std::basic_istream<_CharT, _Traits>::getline(_CharT*, std::streamsize, _CharT)':
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/istream.tcc:599: error: expected unqualified-id before '(' token
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/istream.tcc:660:51: macro "max" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/istream.tcc: In member function `std::basic_istream<_CharT, _Traits>& std::basic_istream<_CharT, _Traits>::ignore(std::streamsize, typename _Traits::int_type)':
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/istream.tcc:660: error: `max' is not a member of `std::numeric_limits<int>'
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/istream.tcc: In member function `std::streamsize std::basic_istream<_CharT, _Traits>::readsome(_CharT*, std::streamsize)':
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/istream.tcc:744: error: expected unqualified-id before '(' token
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/istream.tcc:965:43: macro "max" requires 2 arguments, but only 1 given
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/istream.tcc: In function `std::basic_istream<_CharT, _Traits>& std::operator>>(std::basic_istream<_CharT, _Traits>&, _CharT*)':
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/istream.tcc:965: error: `max' is not a member of `std::numeric_limits<int>'
+In file included from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/vector:72,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/ext/hashtable.h:68,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/ext/hash_map:65,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/hash_map.h:61,
+                 from ts.cpp:3:
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/stl_bvector.h: In member function `void std::vector<bool, _Alloc>::_M_insert_range(std::_Bit_iterator, _ForwardIterator, _ForwardIterator, std::forward_iterator_tag)':
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/stl_bvector.h:522: error: expected unqualified-id before '(' token
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/stl_bvector.h: In member function `void std::vector<bool, _Alloc>::_M_fill_insert(std::_Bit_iterator, size_t, bool)':
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/stl_bvector.h:823: error: expected unqualified-id before '(' token
+In file included from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/vector:75,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/ext/hashtable.h:68,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/ext/hash_map:65,
+                 from /usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/backward/hash_map.h:61,
+                 from ts.cpp:3:
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/vector.tcc: In member function `void std::vector<_Tp, _Alloc>::_M_fill_insert(__gnu_cxx::__normal_iterator<typename _Alloc::pointer, std::vector<_Tp, _Alloc> >, size_t, const _Tp&)':
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/vector.tcc:307: error: expected unqualified-id before '(' token
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/vector.tcc: In member function `void std::vector<_Tp, _Alloc>::_M_range_insert(__gnu_cxx::__normal_iterator<typename _Alloc::pointer, std::vector<_Tp, _Alloc> >, _ForwardIterator, _ForwardIterator, std::forward_iterator_tag)':
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.3-20050110/include/g++-v3/bits/vector.tcc:384: error: expected unqualified-id before '(' token
+make: *** [ts.o] Error 1
