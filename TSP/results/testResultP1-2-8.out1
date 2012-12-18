@@ -1,0 +1,42 @@
+Instance input\ulysses16.tsp read: 16
+INITIAL_TASKS_DEPTH = 2
+NWORKERS = 8
+------------ Best Greedy --------------
+Tour: 2 -> 1 -> 3 -> 7 -> 0 -> 15 -> 12 -> 13 -> 11 -> 6 -> 5 -> 14 -> 4 -> 9 -> 8 -> 10 -> 2
+	Cost: 7943
+------------ Initializing Search --------------
+Total Initial Tasks = 210
+Task for worker 0 = 27
+Task for worker 1 = 27
+Task for worker 2 = 26
+Task for worker 3 = 26
+Task for worker 4 = 26
+Task for worker 5 = 26
+Task for worker 6 = 26
+Task for worker 7 = 26
+Current Execution Time: 0.000 (s)
+Update Best: 7708
+Current Execution Time: 0.000 (s)
+Update Best: 7621
+Current Execution Time: 0.000 (s)
+Update Best: 7537
+Current Execution Time: 0.000 (s)
+Update Best: 7450
+Current Execution Time: 0.000 (s)
+Update Best: 7253
+Current Execution Time: 0.000 (s)
+Update Best: 7166
+Current Execution Time: 0.000 (s)
+Update Best: 7130
+Current Execution Time: 0.015 (s)
+Update Best: 7093
+Current Execution Time: 0.046 (s)
+Update Best: 6859
+------------ Best Found --------------
+Tour: 0 -> 13 -> 12 -> 11 -> 6 -> 5 -> 14 -> 4 -> 10 -> 8 -> 9 -> 15 -> 2 -> 1 -> 3 -> 7 -> 0
+	Cost: 6859
+Total Execution Time: 77.610 (s)
+
+btf:0.046
+bsf:6859
+tet:77.610
