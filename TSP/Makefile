@@ -1,5 +1,5 @@
 CC := g++
-CFLAGS := -O3 -pthread
+CFLAGS := -O3 -lpthread
 
 OBJECTS:= readtsplib.o
 
