@@ -1,7 +1,7 @@
 #!/bin/bash
 
 NWORKERS=("2" "4" "8" "16")
-DEPTH=("1" "2" "3")
+DEPTH=("4")
 FILE="input\ulysses16.tsp"
 
 ./seq_bb_tsp.exe $FILE | tee ./results/testResultSeq.out

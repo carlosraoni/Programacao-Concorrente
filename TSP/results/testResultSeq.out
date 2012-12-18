@@ -65,8 +65,8 @@ Update Best: 6859
 ------------ Best Found --------------
 Tour: 0 -> 7 -> 3 -> 1 -> 2 -> 15 -> 9 -> 8 -> 10 -> 4 -> 14 -> 5 -> 6 -> 11 -> 12 -> 13 -> 0
 	Cost: 6859
-Total Execution Time: 122.834 (s)
+Total Execution Time: 123.755 (s)
 
 btf:0.468
 bsf:6859
-tet:122.834
+tet:123.755
