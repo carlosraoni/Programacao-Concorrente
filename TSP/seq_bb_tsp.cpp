@@ -14,56 +14,29 @@ using namespace std;
 
 const int INF = 1000000;
 
+clock_t begin, end; // Clock de ínicio e fim para cronometrar o tempo gasto no cálculo
+double timeSpent; // Tempo total gasto no cálculo
+
 int n; // Número de cidades
 int ** Dist; // Matriz de distâncias
-int lowerBoundIni = 0;
+double lowerBoundIni = INF;
 
-//vector< pair<int, int> > minEdges; // Guarda as duas menores arestas de cada vértice
-vector< set<pair<int, int> > > minEdges; // Guarda as duas menores arestas de cada vértice
-int EDGE_PENALTY = INF;
-
-pair<int, int> getMinEdgesCosts(set< pair<int, int> > & e){
-	set< pair<int, int> >::iterator it = e.begin();
-
-	int c0 = (*it).first;
-	it++;
-	int c1 = (*it).first;
-
-	return pair<int, int>(c0, c1);
-}
-
-int initializeMinEdges(){
-	int initialLowerBound = 0;
-
-	set< pair<int, int> > e;
-	for(int i=0; i<n; i++){
-		for(int j=0; j<n; j++){
-			if(i == j) continue;
-			e.insert(pair<int, int>(Dist(i, j), j));
+// Imprime a matriz de custos
+void printCosts(){
+	cout << "Number of citys: " << n << endl;
+	for(int i=0; i < n; i++){
+		for(int j=i+1; j<n; j++){
+			cout << Dist(i, j) << " ";
 		}
-		pair<int, int> minCosts = getMinEdgesCosts(e);
-		initialLowerBound += minCosts.first; initialLowerBound += minCosts.second;
-
-		minEdges.push_back(e);
-		cout << "Min[" << i << "] = " << minCosts.first << " - " << minCosts.second << endl;
-
-		e.clear();
+		cout << endl;
 	}
-
-	return initialLowerBound;
 }
-
-
 
 // Classe que encapsula um tour no grafo
 class Tour{
 public:
 
-	Tour() : visited(vector<bool>(n, false)), cost(0), sz(0), lowerBound(lowerBoundIni), minEdgesTour(minEdges){
-		for(int i=0; i<n; i++){
-			pair<int, int> minCosts = getMinEdgesCosts(minEdgesTour[i]);
-			lowerBoundV.push_back( minCosts.first + minCosts.second );
-		}
+	Tour() : visited(vector<bool>(n, false)), cost(0), sz(0){
 	}
 
 	// Adiciona uma cidade ao Tour
@@ -75,14 +48,6 @@ public:
 		sz++;
 		visited[c] = true;
 		cost += deltaCost;
-
-		if(sz > 1){
-			updateLowerBoundLastAddedEdge();
-		}
-		if(sz == n){
-			updateLowerBoundCloseCycle();
-		}
-		//lowerBound += deltaLowerBound;
 	}
 
 	// Determina o custo de adicionar uma cidade
@@ -96,110 +61,14 @@ public:
 		return delta;
 	}
 
-	void updateLowerBoundLastAddedEdge(){
-		int idxSource = sz - 2, idxDest = sz -1;
-		int source = tour[idxSource];
-		int dest = tour[idxDest];
-		int cost = Dist(source, dest);
-
-		lowerBound -= lowerBoundV[source];
-		lowerBound -= lowerBoundV[dest];
-
-		minEdgesTour[source].erase(pair<int, int>(cost, dest));
-		minEdgesTour[dest].erase(pair<int, int>(cost, source));
-
-		lowerBoundV[source] = cost;
-		if(idxSource >= 1){
-			lowerBoundV[source] += Dist(tour[idxSource - 1], source);
-		}
-		else{
-			lowerBoundV[source] += (*minEdgesTour[source].begin()).first;
-		}
-
-		lowerBoundV[dest] = cost;
-		lowerBoundV[dest] += (*minEdgesTour[dest].begin()).first;
-
-		lowerBound += lowerBoundV[source] + lowerBoundV[dest];
-	}
-
-	void updateLowerBoundCloseCycle(){
-		int first = tour[0];
-		int last = tour[sz - 1];
-		int cost = Dist(last, first);
-
-		lowerBound -= lowerBoundV[last];
-		lowerBound -= lowerBoundV[first];
-
-		lowerBoundV[first] = Dist(first, tour[1]);
-		lowerBoundV[first] += Dist(last, first);
-
-		lowerBoundV[last] = Dist(tour[sz-2], last);
-		lowerBoundV[last] += Dist(last, first);
-
-		minEdgesTour[first].erase(pair<int, int>(cost, last));
-		minEdgesTour[last].erase(pair<int, int>(cost, first));
-
-		lowerBound += lowerBoundV[last] + lowerBoundV[first];
-	}
-
-	void updateLowerBoundRemoveLastEdge(){
-		int source = tour[sz - 2];
-		int dest = tour[sz - 1];
-		int cost = Dist(source, dest);
-
-		lowerBound -= lowerBoundV[source];
-		lowerBound -= lowerBoundV[dest];
-
-		minEdgesTour[source].insert(pair<int, int>(cost, dest));
-		minEdgesTour[dest].insert(pair<int, int>(cost, source));
-
-		pair<int, int> minCostsSource = getMinEdgesCosts(minEdgesTour[source]);
-		lowerBoundV[source] =  minCostsSource.first;
-		if(sz >= 3){
-			lowerBoundV[source] +=  Dist(tour[sz - 3], source);
-		}
-		else{
-			lowerBoundV[source] +=  minCostsSource.second;
-		}
-
-		pair<int, int> minCostsDest = getMinEdgesCosts(minEdgesTour[dest]);
-		lowerBoundV[dest] =  minCostsDest.first + minCostsDest.second;
-
-		lowerBound += lowerBoundV[source] + lowerBoundV[dest];
-	}
-
-	void updateLowerBoundRemoveClosingEdge(){
-		int source = tour[sz - 1];
-		int dest = tour[0];
-		int cost = Dist(source, dest);
-
-		lowerBound -= lowerBoundV[source];
-		lowerBound -= lowerBoundV[dest];
-
-		minEdgesTour[source].insert(pair<int, int>(cost, dest));
-		minEdgesTour[dest].insert(pair<int, int>(cost, source));
-
-		pair<int, int> minCostsSource = getMinEdgesCosts(minEdgesTour[source]);
-		lowerBoundV[source] =  minCostsSource.first;
-		lowerBoundV[source] +=  Dist(tour[sz - 2], source);
-
-		pair<int, int> minCostsDest = getMinEdgesCosts(minEdgesTour[dest]);
-		lowerBoundV[dest] =  minCostsDest.first;
-		lowerBoundV[source] +=  Dist(dest, tour[1]);
-
-		lowerBound += lowerBoundV[source] + lowerBoundV[dest];
-	}
-
 	// Remove a última cidade do tour
 	void removeLastCity(){
 		int c = tour[sz - 1];
 		if(sz == n){
 			cost -= Dist(c, tour[0]);
-			updateLowerBoundRemoveClosingEdge();
 		}
 		if(sz > 1){
 			cost -= Dist(tour[sz - 2], c);
-			updateLowerBoundRemoveLastEdge();
 		}
 
 		tour.pop_back();
@@ -227,42 +96,21 @@ public:
 		return visited[c];
 	}
 
-	double getLowerBound() const{
-		return (double) lowerBound / 2.0;
-	}
-
-	int getDoubleLowerBound() const{
-		return lowerBound;
-	}
-
 private:
 	vector<int> tour; // Guarda sequência de visitas as cidades (tour)
 	vector<bool> visited; // Armazena para cada cidade se a mesma já foi visitada
 	int cost; // Custo do tour
 	int sz; // Tamanho do tour
-	int lowerBound;
-	vector<int> lowerBoundV;
-	vector< set< pair<int, int> > > minEdgesTour;
 };
 
+Tour best;
 
 bool operator<(const Tour & t1, const Tour & t2){
 	return t1.getCost() < t2.getCost();
 }
 
-// Imprime a matriz de custos
-void printCosts(){
-	cout << "Number of citys: " << n << endl;
-	for(int i=0; i < n; i++){
-		for(int j=i+1; j<n; j++){
-			cout << Dist(i, j) << " ";
-		}
-		cout << endl;
-	}
-}
-
 // Imprime um tour
-void printTour(const Tour & t){
+void printTour(Tour & t){
 	int sz = t.getSize();
 	if(sz == 0) return;
 
@@ -272,7 +120,6 @@ void printTour(const Tour & t){
 	}
 	cout << " -> " << t.getCity(0) << endl;
 	cout << "\tCost: " << t.getCost() << endl;
-	cout << "\tLB: " << t.getLowerBound() << endl;
 
 }
 
@@ -309,8 +156,6 @@ Tour buildGreedyTour(int ini){
 // Determina o menor tour entre todos os tour's possíveis utilizando a estratégia gulosa
 Tour getMinGreedyTour(){
 	Tour best = buildGreedyTour(0);
-	//cout << "==== Greedy 0" << endl;
-	//printTour(best);
 	for(int i=1; i<n; i++){
 		Tour t = buildGreedyTour(i);
 		cout << "==== Greedy "<< i << endl;
@@ -321,14 +166,83 @@ Tour getMinGreedyTour(){
 	return best;
 }
 
-clock_t begin, end; // Clock de ínicio e fim para cronometrar o tempo gasto no cálculo
-double timeSpent; // Tempo total gasto no cálculo
+void updateMinTwoEdges(vector< vector<int> > & minTwoEdges, int src, int dest){
+	int cost = Dist(src, dest);
+	if(cost < minTwoEdges[src][1]){
+		minTwoEdges[src][1] = cost;
+		if(cost < minTwoEdges[src][0])
+			swap(minTwoEdges[src][0], minTwoEdges[src][1]);
+	}
+	if(cost < minTwoEdges[dest][1]){
+		minTwoEdges[dest][1] = cost;
+		if(cost < minTwoEdges[dest][0])
+			swap(minTwoEdges[dest][0], minTwoEdges[dest][1]);
+	}
+}
 
-Tour best;
+void calculateInitialLowerBound(){
+	vector< vector<int> > minTwoEdges(n, vector<int>(2, INF));
+	for(int i=0; i<n; i++){
+		for(int j=i+1; j<n; j++){
+			updateMinTwoEdges(minTwoEdges, i, j);
+		}
+	}
+
+	int lb = 0;
+	for(int i=0; i<n; i++){
+		lb += minTwoEdges[i][0];
+		lb += minTwoEdges[i][1];
+	}
+
+	lowerBoundIni = (double) lb / 2.0;
+}
+
+double calculateLowerBound(const Tour & t){
+	int sz = t.getSize();
+
+	if(sz <= 1){
+		return (double) lowerBoundIni / 2.0;
+	}
+	if(sz == n){
+		return (double) t.getCost();
+	}
+
+	vector<int> unVis;
+	for(int i=0; i<n; i++){
+		if(!t.isVisited(i))
+			unVis.push_back(i);
+	}
+	int first = t.getCity(0);
+	int last = t.getCity(sz - 1);
+
+	vector< vector<int> > minTwoEdges(n, vector<int>(2, INF));
+
+	int szUnvis = unVis.size(), cost;
+	for(int i=0; i<szUnvis; i++){
+		int src = unVis[i];
+		for(int j=i+1; j<szUnvis; j++){
+			int dest = unVis[j];
+			updateMinTwoEdges(minTwoEdges, src, dest);
+		}
+		updateMinTwoEdges(minTwoEdges, src, first);
+		updateMinTwoEdges(minTwoEdges, src, last);
+	}
+
+	int lb = 2 * t.getCost();
+	lb += minTwoEdges[first][0];
+	lb += minTwoEdges[last][0];
+
+	for(int i=0; i<szUnvis; i++){
+		int v = unVis[i];
+		lb += minTwoEdges[v][0];
+		lb += minTwoEdges[v][1];
+	}
+
+	return (double) lb / 2.0;
+}
 
 void dfs(Tour & t){
 	if(t.getSize() == n){
-		cout << t.getLowerBound() << " " << t.getCost() << endl;
 		if(t.getCost() < best.getCost()){
 			timeSpent = (double) (clock() - begin) / CLOCKS_PER_SEC; // Determina o tempo total gasto
 			printf("Current Execution Time: %.3f (s)\n", timeSpent);
@@ -345,19 +259,20 @@ void dfs(Tour & t){
 
 		Tour nextTour = t;
 		nextTour.addCity(i);
+		double lb = calculateLowerBound(nextTour);
+		//cout << "lb: " << lb << " , cost: " << t.getCost() << endl;
 
-		if(nextTour.getLowerBound() >= (double) best.getCost()){
+		if(lb >= (double) best.getCost()){
 			continue;
 		}
 
-		//candidates.push_back(pair<double, Tour>(nextTour.getLowerBound(), nextTour));
-		candidates.push_back(pair<double, Tour>(nextTour.getCost(), nextTour));
+		candidates.push_back(pair<double, Tour>(lb, nextTour));
 	}
 	sort(candidates.begin(), candidates.end());
 
 	int nc = candidates.size();
 	for(int i=0; i<nc; i++){
-		if(candidates[i].second.getLowerBound() < (double) best.getCost()){
+		if(candidates[i].first < (double) best.getCost()){
 			dfs(candidates[i].second);
 		}
 	}
@@ -368,54 +283,6 @@ void dfs(){
 	t.addCity(0);
 
 	dfs(t);
-}
-
-struct CompareLowerBound{
-	bool operator()(const Tour & t1, const Tour & t2) const{
-		return t1.getLowerBound() + (n - t1.getSize()) * EDGE_PENALTY > t2.getLowerBound() + (n - t2.getSize()) * EDGE_PENALTY;
-	}
-};
-
-void bbTsp(){
-	priority_queue<Tour, vector<Tour>, CompareLowerBound> q;
-	Tour tIni;
-	tIni.addCity(0);
-
-	q.push(tIni);
-	while(!q.empty()){
-		Tour current = q.top();
-		q.pop();
-		//cout << "Curr " << current.getSize() << " = " << current.getCost() << endl;
-
-		for(int i=0; i<n; i++){
-			if(current.isVisited(i))
-				continue;
-
-			int deltaCost = current.getCostOfAddCity(i);
-			if(current.getCost() + deltaCost >= best.getCost()){
-				continue;
-			}
-
-			current.addCity(i);
-			double lowerBound = current.getLowerBound();
-			if(lowerBound < (double) best.getCost()){
-				if(current.getSize() == n){
-					if(current.getCost() < best.getCost()){
-						timeSpent = (double) (clock() - begin) / CLOCKS_PER_SEC; // Determina o tempo total gasto
-						printf("Current Execution Time: %.3f (s)\n", timeSpent);
-						cout << "Update Best: " << best.getCost() << " to " << current.getCost() << endl;
-						best = current;
-					}
-				}
-				else{
-					q.push(current);
-				}
-			}
-			current.removeLastCity();
-
-		}
-
-	}
 }
 
 int main(int argc, char ** argv){
@@ -431,20 +298,19 @@ int main(int argc, char ** argv){
 	}
 
 	cout << "Instance " << argv[1] << " read: " << n << endl;
-	//printCosts();
-	lowerBoundIni = initializeMinEdges();
+
+	calculateInitialLowerBound();
 
 	Tour minGreedy = getMinGreedyTour();
-
 	cout << "------------ Best Greedy --------------" << endl;
 	printTour(minGreedy);
-
 	best = minGreedy;
+
+	cout << "------------ Initializing Search --------------" << endl;
 
 	begin = clock(); // Clock de início do método
 
 	dfs();
-	//bbTsp();
 
 	end = clock(); // Clock de fim do método
 	timeSpent = (double) (end - begin) / CLOCKS_PER_SEC; // Determina o tempo total gasto

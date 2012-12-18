@@ -66,8 +66,8 @@ void read_explicit(FILE *f, int **Dist, int n) {
 }
 
 void read_geo(FILE *f, int **Dist, int n) {
-	#define PI 3.141592
-	#define RRR 6378.388
+	double RRR = 6378.388;
+	double PI = 2.0 * acos(0);
 
 	char lixo[LEN];
 	int aux, deg;
@@ -82,11 +82,13 @@ void read_geo(FILE *f, int **Dist, int n) {
 		fscanf(f,"%d %lf %lf",&aux,&a,&b);
 		//printf("%d %lf %lf\n", aux, a, b);
 
-		deg = (int)(a + 0.5);
+		//deg = (int)(a + 0.5);
+		deg = (int)(a);
 		min = a - deg;
 		lat[i] = PI * (deg + 5.0 * min / 3.0) / 180.0;
 
-		deg = (int)(b + 0.5);
+		//deg = (int)(b + 0.5);
+		deg = (int)(b);
 		min = b - deg;
 		longit[i] = PI * (deg + 5.0 * min / 3.0) / 180.0;
 	}
