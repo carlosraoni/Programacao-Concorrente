@@ -8,6 +8,9 @@
 #include <cmath>
 #include <algorithm>
 #include <utility>
+#include <pthread.h>
+#include <semaphore.h>
+
 #include "readtsplib.h"
 
 using namespace std;
@@ -20,6 +23,10 @@ double timeSpent; // Tempo total gasto no cálculo
 int n; // Número de cidades
 int ** Dist; // Matriz de distâncias
 double lowerBoundIni = INF;
+
+int INITIAL_CITY = 0;
+int INITIAL_TASKS_DEPTH = 1;
+int NWORKERS = 2;
 
 // Imprime a matriz de custos
 void printCosts(){
@@ -103,7 +110,36 @@ private:
 	int sz; // Tamanho do tour
 };
 
-Tour best;
+vector< Tour > initialTasks; // Tarefas iniciais
+vector< vector<Tour> > tasksPerWorker; // Cada worker terá sua fila de tarefas (tour's parciais a serem expandidos)
+Tour best; // Melhor solução encontrada
+pthread_mutex_t bestLock;
+
+void initializeBestLock(){
+	pthread_mutex_init(&bestLock, NULL);
+}
+
+double getUpperBound(){
+	//double value;
+
+	//pthread_mutex_lock(&bestLock); // Obtém lock
+	//value = best.getCost(); // Copia valor
+	//pthread_mutex_unlock(&bestLock); // Libera o lock
+
+	//return value; // Retorna valor
+	return best.getCost();
+}
+
+void checkIfUpdateBestSolution(Tour & newBest){
+	pthread_mutex_lock(&bestLock); // Obtém lock
+	if(newBest.getCost() < best.getCost()){
+		timeSpent = (double) (clock() - begin) / CLOCKS_PER_SEC; // Determina o tempo total gasto
+		printf("Current Execution Time: %.3f (s)\n", timeSpent);
+		cout << "Update Best: " << newBest.getCost() << endl;
+		best = newBest;
+	}
+	pthread_mutex_unlock(&bestLock); // Libera o lock
+}
 
 bool operator<(const Tour & t1, const Tour & t2){
 	return t1.getCost() < t2.getCost();
@@ -158,8 +194,8 @@ Tour getMinGreedyTour(){
 	Tour best = buildGreedyTour(0);
 	for(int i=1; i<n; i++){
 		Tour t = buildGreedyTour(i);
-		cout << "==== Greedy "<< i << endl;
-		printTour(t);
+		//cout << "==== Greedy "<< i << endl;
+		//printTour(t);
 		if(t.getCost() < best.getCost())
 			best = t;
 	}
@@ -243,12 +279,7 @@ double calculateLowerBound(const Tour & t){
 
 void dfs(Tour & t){
 	if(t.getSize() == n){
-		if(t.getCost() < best.getCost()){
-			timeSpent = (double) (clock() - begin) / CLOCKS_PER_SEC; // Determina o tempo total gasto
-			printf("Current Execution Time: %.3f (s)\n", timeSpent);
-			cout << "Update Best: " << t.getCost() << endl;
-			best = t;
-		}
+		checkIfUpdateBestSolution(t);
 		return;
 	}
 
@@ -262,7 +293,7 @@ void dfs(Tour & t){
 		double lb = calculateLowerBound(nextTour);
 		//cout << "lb: " << lb << " , cost: " << t.getCost() << endl;
 
-		if(lb >= (double) best.getCost()){
+		if(lb >= getUpperBound()){
 			continue;
 		}
 
@@ -272,22 +303,75 @@ void dfs(Tour & t){
 
 	int nc = candidates.size();
 	for(int i=0; i<nc; i++){
-		if(candidates[i].first < (double) best.getCost()){
+		if(candidates[i].first < getUpperBound()){
 			dfs(candidates[i].second);
 		}
 	}
 }
 
-void dfs(){
-	Tour t;
-	t.addCity(0);
+void createTasks(Tour & t){
+	if(t.getSize() - 1 == INITIAL_TASKS_DEPTH){
+		initialTasks.push_back(t);
+		return;
+	}
+	for(int i=0; i<n; i++){
+		if(!t.isVisited(i)){
+			t.addCity(i);
+			createTasks(t);
+			t.removeLastCity();
+		}
+	}
+}
 
-	dfs(t);
+void createInitialTasks(){
+	Tour t;
+	t.addCity(INITIAL_CITY);
+
+	createTasks(t);
+
+	for(int i=0; i<NWORKERS; i++){
+		tasksPerWorker.push_back(vector<Tour>());
+	}
+
+	int totalTasks = initialTasks.size();
+	cout << "Total Initial Tasks = " << totalTasks << endl;
+	int currWorker = 0;
+	for(int i=0; i<totalTasks; i++){
+		tasksPerWorker[currWorker].push_back(initialTasks[i]);
+		currWorker = (currWorker + 1) % NWORKERS;
+	}
+	for(int i=0; i<NWORKERS; i++){
+		cout << "Task for worker " << i << " = " << tasksPerWorker[i].size() << endl;
+	}
+}
+
+void * worker(void * arg){
+	int threadId = *((int *) arg); // identificador da thread
+
+	vector< pair<double, Tour> > candidates;
+	vector< Tour > tasks = tasksPerWorker[threadId];
+	int nTasks = tasks.size();
+    for(int i=0; i<nTasks; i++){
+    	double lb = calculateLowerBound(tasks[i]);
+    	if(lb < getUpperBound()){
+    		candidates.push_back(pair<double, Tour>(lb, tasks[i]));
+    	}
+    }
+
+    sort(candidates.begin(), candidates.end());
+
+	int nc = candidates.size();
+	for(int i=0; i<nc; i++){
+		if(candidates[i].first < getUpperBound()){
+			dfs(candidates[i].second);
+		}
+	}
+
 }
 
 int main(int argc, char ** argv){
 
-	if(argc != 2){
+	if(argc < 2){
 		cout << "Use: " << argv[0] << " 'tsp_input_file.tsp'" << endl;
 		return 1;
 	}
@@ -297,7 +381,14 @@ int main(int argc, char ** argv){
 		return 1;
 	}
 
+	if(argc == 4){
+		INITIAL_TASKS_DEPTH = atoi(argv[2]);
+		NWORKERS = atoi(argv[3]);
+	}
+
 	cout << "Instance " << argv[1] << " read: " << n << endl;
+	cout << "INITIAL_TASKS_DEPTH = " << INITIAL_TASKS_DEPTH << endl;
+	cout << "NWORKERS = " << NWORKERS << endl;
 
 	calculateInitialLowerBound();
 
@@ -307,10 +398,26 @@ int main(int argc, char ** argv){
 	best = minGreedy;
 
 	cout << "------------ Initializing Search --------------" << endl;
-
 	begin = clock(); // Clock de início do método
 
-	dfs();
+	initializeBestLock();
+	createInitialTasks();
+
+	pthread_t workers[NWORKERS];
+	int ids[NWORKERS];
+
+	// Cria as threads trabalhadoras
+	for(int i=0; i<NWORKERS; i++){
+		ids[i] = i;
+		if (pthread_create(&workers[i], NULL, worker, (void *) &ids[i])){
+			printf("Error creating thread worker %d\n", i);
+		}
+	}
+
+	// Aguardar fim de execução das threads trabalhadoras
+	for (int i = 0; i < NWORKERS; i++){
+		pthread_join(workers[i], NULL);
+	}
 
 	end = clock(); // Clock de fim do método
 	timeSpent = (double) (end - begin) / CLOCKS_PER_SEC; // Determina o tempo total gasto
