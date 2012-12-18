@@ -17,7 +17,7 @@ using namespace std;
 
 const int INF = 1000000;
 
-clock_t begin, end; // Clock de ínicio e fim para cronometrar o tempo gasto no cálculo
+clock_t begin, end, clockOfBest; // Clock de ínicio e fim para cronometrar o tempo gasto no cálculo
 double timeSpent; // Tempo total gasto no cálculo
 
 int n; // Número de cidades
@@ -133,7 +133,8 @@ double getUpperBound(){
 void checkIfUpdateBestSolution(Tour & newBest){
 	pthread_mutex_lock(&bestLock); // Obtém lock
 	if(newBest.getCost() < best.getCost()){
-		timeSpent = (double) (clock() - begin) / CLOCKS_PER_SEC; // Determina o tempo total gasto
+	    clockOfBest = clock();
+		timeSpent = (double) (clockOfBest - begin) / CLOCKS_PER_SEC; // Determina o tempo total gasto
 		printf("Current Execution Time: %.3f (s)\n", timeSpent);
 		cout << "Update Best: " << newBest.getCost() << endl;
 		best = newBest;
@@ -425,7 +426,12 @@ int main(int argc, char ** argv){
 	cout << "------------ Best Found --------------" << endl;
 	printTour(best);
 
-	printf("Total Execution Time: %.3f (s)\n", timeSpent);
+	printf("Total Execution Time: %.3f (s)\n\n", timeSpent);
+
+    double btf = (double) (clockOfBest - begin) / CLOCKS_PER_SEC; // Determina o tempo total gasto
+    printf("btf:%.3f\n", btf);
+    printf("bsf:%d\n", best.getCost());
+    printf("tet:%.3f\n", timeSpent);
 
 	return 0;
 }
